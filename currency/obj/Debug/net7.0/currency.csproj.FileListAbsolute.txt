@@ -32,3 +32,5 @@ C:\Users\Lenovo\Desktop\office\office\currency\obj\Debug\net7.0\refint\currency.
 C:\Users\Lenovo\Desktop\office\office\currency\obj\Debug\net7.0\currency.pdb
 C:\Users\Lenovo\Desktop\office\office\currency\obj\Debug\net7.0\currency.genruntimeconfig.cache
 C:\Users\Lenovo\Desktop\office\office\currency\obj\Debug\net7.0\ref\currency.dll
+C:\Users\Lenovo\Desktop\office\office\currency\bin\Debug\net7.0\currency.xml
+C:\Users\Lenovo\Desktop\office\office\currency\obj\Debug\net7.0\currency.xml

@@ -6,13 +6,8 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-public class DovizController : Controller
+public class ExchangeRateController : Controller
 {
-    public IActionResult Index()
-    {
-        return View();
-    }
-
     [HttpPost]
     public async Task<IActionResult> DovizCevir()
     {
@@ -28,9 +23,9 @@ public class DovizController : Controller
         string apiUrl = $"https://open.er-api.com/v6/latest/{fromCurrency}?apikey={apiKey}";
         var exchangeRates = await GetExchangeRates(apiUrl);
 
-        if (exchangeRates != null && exchangeRates.rates.ContainsKey(toCurrency))
+        if (exchangeRates != null && exchangeRates.Rates.ContainsKey(toCurrency))
         {
-            decimal convertedAmount = amount * exchangeRates.rates[toCurrency];
+            decimal convertedAmount = amount * exchangeRates.Rates[toCurrency];
 
             ViewBag.Result = $"{amount} {fromCurrency} = {convertedAmount} {toCurrency}";
         }
@@ -39,10 +34,11 @@ public class DovizController : Controller
             ViewBag.Result = "Döviz kuru alınamadı veya hatalı döviz cinsi girildi.";
         }
 
-        return View("Index");
+        // ExchangeRate modelini view'a göndermeden sadece sonucu gönder
+        return View();
     }
 
-    private async Task<ExchangeRates> GetExchangeRates(string apiUrl)
+    private async Task<ExchangeRate> GetExchangeRates(string apiUrl)
     {
         using (HttpClient client = new HttpClient())
         {
@@ -51,7 +47,7 @@ public class DovizController : Controller
             if (response.IsSuccessStatusCode)
             {
                 string json = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<ExchangeRates>(json);
+                return JsonSerializer.Deserialize<ExchangeRate>(json);
             }
             else
             {
@@ -60,4 +56,3 @@ public class DovizController : Controller
         }
     }
 }
-
