@@ -1,3 +1,4 @@
+using currency;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -21,15 +22,15 @@ public class DovizController : Controller
         string toCurrency = Request.Form["toCurrency"].ToString().ToUpper();
 
         // API Key'i buraya ekleyin
-        string apiKey = "YOUR_API_KEY";
+        string apiKey = "f6ccacdf30899180c284929c";
 
         // API ile döviz kurlarını al
         string apiUrl = $"https://open.er-api.com/v6/latest/{fromCurrency}?apikey={apiKey}";
         var exchangeRates = await GetExchangeRates(apiUrl);
 
-        if (exchangeRates != null && exchangeRates.Rates.ContainsKey(toCurrency))
+        if (exchangeRates != null && exchangeRates.rates.ContainsKey(toCurrency))
         {
-            decimal convertedAmount = amount * exchangeRates.Rates[toCurrency];
+            decimal convertedAmount = amount * exchangeRates.rates[toCurrency];
 
             ViewBag.Result = $"{amount} {fromCurrency} = {convertedAmount} {toCurrency}";
         }
@@ -60,12 +61,3 @@ public class DovizController : Controller
     }
 }
 
-public class ExchangeRates
-{
-    public string @base { get; set; }
-    public string disclaimer { get; set; }
-    public string license { get; set; }
-    public long timestamp { get; set; }
-    public string? @base { get; set; }
-    public Dictionary<string, decimal> rates { get; set; }
-}
